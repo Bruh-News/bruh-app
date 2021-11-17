@@ -20,10 +20,21 @@ const SECONDARY: TextStyle = {
   color: palette.lightGrey
 }
 
+const ACTIONS: ViewStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between"
+}
+
 export interface PostProps {
   /**
    * An optional style override useful for padding & margin.
    */
+  post: {
+    un: string,
+    postText: string,
+    secondsSinceEpoch: number
+  }
   style?: StyleProp<ViewStyle>
 }
 
@@ -31,17 +42,19 @@ export interface PostProps {
  * Describe your component here
  */
 export const Post = observer(function Post(props: PostProps) {
-  const { style } = props
+  const { style, post } = props
   const styles = flatten([CONTAINER, style])
 
   return (
     <View style={styles}>
       <Card>
-        <Text style={USER_NAME}>Sarah</Text>
-        <Text style={SECONDARY}>20 April at 4:20PM</Text>
-        <Text>The fluoride in the water's turning the frickin' frogs gay!</Text>
-        <Text style={SECONDARY}><ChatDots size={24} color={palette.lightGrey}/>7 Comments</Text>
-        <Text style={SECONDARY}><ShareNetwork size={24} color={palette.lightGrey} />Share</Text>
+        <Text style={USER_NAME}>{post.un}</Text>
+        <Text style={SECONDARY}>{(new Date(post.secondsSinceEpoch)).toLocaleString()}</Text>
+        <Text>{post.postText}</Text>
+        <View style={ACTIONS}>
+          <Text style={SECONDARY}><ChatDots size={24} color={palette.lightGrey}/>7 Comments</Text>
+          <Text style={SECONDARY}><ShareNetwork size={24} color={palette.lightGrey} />Share</Text>
+        </View>
       </Card>
     </View>
   )

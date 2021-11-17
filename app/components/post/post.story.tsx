@@ -9,7 +9,11 @@ storiesOf("Post", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Primary" usage="The primary.">
-        <Post style={{ backgroundColor: color.error }} />
+        <Post post={{
+          un: "Sarah",
+          postText: "Hello World",
+          secondsSinceEpoch: 1634916525
+        }}/>
       </UseCase>
     </Story>
   ))
