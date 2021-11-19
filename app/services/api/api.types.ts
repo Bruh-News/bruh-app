@@ -2,8 +2,17 @@ import { GeneralApiProblem } from "./api-problem"
 import { Character } from "../../models/character/character"
 
 export interface User {
-  id: number
-  name: string
+  id: number,
+  politicalLeaning: string,
+  age: string,
+  race: string,
+  nationality: string,
+  religion: string,
+  parentalStatus: string,
+  gender: string,
+  email: string,
+  username: string,
+  password: string
 }
 
 export type GetUsersResult = { kind: "ok"; users: User[] } | GeneralApiProblem
