@@ -86,7 +86,7 @@ export class UserAPI {
     }
 
     // make the api call
-    const response: ApiResponse<any> = await this.api.apisauce.post(`/createuser`, payload);
+    const response: ApiResponse<any> = await this.api.apisauce.post(`/setuserattribute`, payload);
 
     // the typical ways to die when calling an api
     if (!response.ok) {
