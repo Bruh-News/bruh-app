@@ -13,5 +13,12 @@ export interface User {
   password: string
 }
 
+export interface AttributeRecord {
+  userId: string,
+  attributeName: string,
+  attributeValue: string
+}
+
+export type NoPayloadResult= { kind: "ok"; } | GeneralApiProblem
 export type GetUserResult = { kind: "ok"; user: User } | GeneralApiProblem
 export type CreateUserResult = { kind: "ok"; id: number } | GeneralApiProblem

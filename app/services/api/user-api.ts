@@ -70,4 +70,35 @@ export class UserAPI {
     }
   }
 
+  /**
+   * Sets user attributes
+   */
+  async setUserAttributes(userId : string, attributes: object): Promise<Types.NoPayloadResult> {
+
+    // preparing the payload
+    let payload: Array<Types.AttributeRecord>;
+    for(const attr in attributes) {
+      payload.push({
+        userId,
+        attributeName: attr,
+        attributeValue: attributes[attr]
+      });
+    }
+
+    // make the api call
+    const response: ApiResponse<any> = await this.api.apisauce.post(`/createuser`, payload);
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      return { kind: "ok" }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
 }
