@@ -16,12 +16,18 @@ const USER_NAME: TextStyle = {
   fontSize: 16
 }
 
+const USER_DATE: TextStyle = {
+  fontWeight: "400",
+  color: palette.lightGrey
+}
+
 const PROFILE: ViewStyle = {
 }
 
 const SECONDARY: TextStyle = {
   fontWeight: "400",
   color: palette.lightGrey,
+  paddingLeft: 4
 }
 
 const CONTENT: TextStyle = {
@@ -34,6 +40,11 @@ const ACTIONS: ViewStyle = {
   justifyContent: "space-between",
   alignItems: "center",
   marginTop: 16
+}
+
+const ACTION: ViewStyle = {
+  alignItems: "center",
+  flexDirection: "row"
 }
 
 export interface PostProps {
@@ -60,13 +71,19 @@ export const Post = observer(function Post(props: PostProps) {
       <Card>
         <View style={PROFILE}>
           <Text style={USER_NAME}>{post.un}</Text>
-          <Text style={SECONDARY}>{(new Date(post.secondsSinceEpoch)).toLocaleString()}</Text>
+          <Text style={USER_DATE}>{(new Date(post.secondsSinceEpoch)).toLocaleString()}</Text>
         </View>
         <Text style={CONTENT}>{post.postText}</Text>
         <Divider color={palette.lightGrey} />
         <View style={ACTIONS}>
-          <Text style={SECONDARY}><ChatDots size={24} color={palette.lightGrey} style={{marginVertical: 16}}/>7 Comments</Text>
-          <Text style={SECONDARY}><ShareNetwork size={24} color={palette.lightGrey} />Share</Text>
+          <View style={ACTION}>
+            <ChatDots size={24} color={palette.lightGrey} />
+            <Text style={SECONDARY}>7 Comments</Text>
+          </View>
+          <View style={ACTION}>
+            <ShareNetwork size={24} color={palette.lightGrey} />
+            <Text style={SECONDARY}>Share</Text>
+          </View>
         </View>
       </Card>
     </View>
