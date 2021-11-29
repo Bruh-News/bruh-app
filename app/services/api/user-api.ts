@@ -43,4 +43,31 @@ export class UserAPI {
       return { kind: "bad-data" }
     }
   }
+
+  /**
+   * Creates a new user
+   */
+  async createUser(un : string, email: string, pw: string): Promise<Types.CreateUserResult> {
+    // make the api call
+    const response: ApiResponse<any> = await this.api.apisauce.post(`/createuser`, {
+      un,
+      email,
+      pw
+    });
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      const id: number = response.data.id;
+      return { kind: "ok", id }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
 }

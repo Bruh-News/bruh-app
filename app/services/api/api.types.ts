@@ -14,3 +14,4 @@ export interface User {
 }
 
 export type GetUserResult = { kind: "ok"; user: User } | GeneralApiProblem
+export type CreateUserResult = { kind: "ok"; id: number } | GeneralApiProblem
