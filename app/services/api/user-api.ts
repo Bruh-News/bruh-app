@@ -3,14 +3,14 @@ import { Api } from "./api"
 import * as Types from "./api.types"
 import { getGeneralApiProblem } from "./api-problem"
 
-export class CharacterApi {
+export class UserAPI {
   private api: Api
 
   constructor(api: Api) {
     this.api = api
   }
 
-    /**
+  /**
    * Gets a single user by ID
    */
   async getUser(id: number): Promise<Types.GetUserResult> {
