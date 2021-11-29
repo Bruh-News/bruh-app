@@ -21,4 +21,4 @@ export interface AttributeRecord {
 
 export type NoPayloadResult= { kind: "ok"; } | GeneralApiProblem
 export type GetUserResult = { kind: "ok"; user: User } | GeneralApiProblem
-export type CreateUserResult = { kind: "ok"; id: number } | GeneralApiProblem
+export type CreateResult = { kind: "ok"; id: number } | GeneralApiProblem

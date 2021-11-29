@@ -47,7 +47,7 @@ export class UserAPI {
   /**
    * Creates a new user
    */
-  async createUser(un : string, email: string, pw: string): Promise<Types.CreateUserResult> {
+  async createUser(un : string, email: string, pw: string): Promise<Types.CreateResult> {
     // make the api call
     const response: ApiResponse<any> = await this.api.apisauce.post(`/createuser`, {
       un,
