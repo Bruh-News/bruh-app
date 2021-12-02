@@ -87,7 +87,7 @@ export const FeedScreen = observer(function FeedScreen() {
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT} preset="fixed">
       <Text preset="header" text="Yeet" />
       <FeedLoadingDisplayChain />
     </Screen>
