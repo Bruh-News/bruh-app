@@ -6,6 +6,7 @@ import { color, palette, typography } from "../../theme"
 import { Card, Icon, Text } from "../"
 import { flatten } from "ramda"
 import { Divider } from "../divider/divider";
+import { Post as PostType } from "../../services/api";
 
 const CONTAINER: ViewStyle = {
   justifyContent: "center",
@@ -51,11 +52,8 @@ export interface PostProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  post: {
-    username: string,
-    postText: string,
-    dateTime: string
-  }
+  post: PostType  // TODO: Convert userId to username using request
+  //... or just have Deuce change it to username in the request
   style?: StyleProp<ViewStyle>
 }
 
@@ -70,7 +68,7 @@ export const Post = observer(function Post(props: PostProps) {
     <View style={styles}>
       <Card>
         <View style={PROFILE}>
-          <Text style={USER_NAME}>{post.username}</Text>
+          <Text style={USER_NAME}>{post.userId}</Text>
           <Text style={USER_DATE}>{(new Date(post.dateTime)).toLocaleString()}</Text>
         </View>
         <Text style={CONTENT}>{post.postText}</Text>
