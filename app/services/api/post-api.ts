@@ -26,10 +26,10 @@ export class PostAPI {
     // transform the data into the format we are expecting
     try {
       const resultPost: Types.Post = {
-        uid: response.data.uid,
+        userId: response.data.userId,
         postText: response.data.postText,
-        secondsSinceEpoch: response.data.secondsSinceEpoch,
-        pid: response.data.pid
+        dateTime: response.data.dateTime,
+        parentId: response.data.parentId
       }
       return { kind: "ok", post: resultPost }
     } catch {

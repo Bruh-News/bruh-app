@@ -10,9 +10,9 @@ storiesOf("Post", module)
     <Story>
       <UseCase text="Primary" usage="The primary.">
         <Post post={{
-          un: "Sarah",
+          username: "Sarah",
           postText: "Hello World",
-          secondsSinceEpoch: 1634916525
+          dateTime: 1634916525
         }}/>
       </UseCase>
     </Story>

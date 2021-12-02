@@ -20,10 +20,10 @@ export interface AttributeRecord {
 }
 
 export interface Post {
-  uid: number,
+  userId: number,
   postText: string,
-  secondsSinceEpoch: number,
-  pid: null
+  dateTime: string,
+  parentId: null
 }
 
 export type NoPayloadResult= { kind: "ok"; } | GeneralApiProblem

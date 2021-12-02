@@ -52,9 +52,9 @@ export interface PostProps {
    * An optional style override useful for padding & margin.
    */
   post: {
-    un: string,
+    username: string,
     postText: string,
-    secondsSinceEpoch: number
+    dateTime: string
   }
   style?: StyleProp<ViewStyle>
 }
@@ -70,8 +70,8 @@ export const Post = observer(function Post(props: PostProps) {
     <View style={styles}>
       <Card>
         <View style={PROFILE}>
-          <Text style={USER_NAME}>{post.un}</Text>
-          <Text style={USER_DATE}>{(new Date(post.secondsSinceEpoch)).toLocaleString()}</Text>
+          <Text style={USER_NAME}>{post.username}</Text>
+          <Text style={USER_DATE}>{(new Date(post.dateTime)).toLocaleString()}</Text>
         </View>
         <Text style={CONTENT}>{post.postText}</Text>
         <Divider color={palette.lightGrey} />
