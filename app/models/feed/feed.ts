@@ -1,6 +1,7 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
-import { PostModel, PostSnapshot, withEnvironment } from "..";
+import { PostModel, PostSnapshot } from "../post/post";
 import { PostAPI } from "../../services/api/post-api";
+import { withEnvironment } from "../extensions/with-environment";
 
 /**
  * Model description here for TypeScript hints.
