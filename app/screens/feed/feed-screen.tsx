@@ -28,9 +28,9 @@ export const FeedScreen = observer(function FeedScreen() {
           title: "Page " + ((k / postsPerPage) + 1),
           data: []
         });
-      } else {
-        paginated[paginated.length - 1].data.push(posts[k]);
       }
+
+      paginated[paginated.length - 1].data.push(posts[k]);
     }
     setPages(paginated);
   }
