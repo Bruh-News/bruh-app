@@ -47,7 +47,7 @@ export const FeedScreen = observer(function FeedScreen() {
       setLoading(false);
       setError(true);
     });
-  }, [user])
+  }, [])
 
   const FeedDataDisplayChain = () => {
     if(pages.length > 0) {
