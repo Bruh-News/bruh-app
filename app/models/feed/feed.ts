@@ -7,13 +7,13 @@ import { withEnvironment } from "../extensions/with-environment";
  * Model description here for TypeScript hints.
  */
 export const FeedModel = types
-  .model("Feed")
+  .model("FeedStore")
   .props({
-    posts: types.array(PostModel)
+    posts: types.optional(types.array(PostModel), [])
   })
   .extend(withEnvironment)
   .actions((self) => ({
-    saveFeed: async (posts: PostSnapshot[]) => {
+    saveFeed: (posts: PostSnapshot[]) => {
       self.posts.replace(posts);
     }
   }))

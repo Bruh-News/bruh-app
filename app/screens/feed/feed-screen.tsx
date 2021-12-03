@@ -55,7 +55,7 @@ export const FeedScreen = observer(function FeedScreen() {
         <SectionList
           sections={pages}
           keyExtractor={(page , index) => page + index}
-          renderItem={({ post }: any) => <Post post={post} />}
+          renderItem={({ item }: any) => <Post post={item} />}
           renderSectionHeader={({ section: { title }}) => (
             <Text preset="header" text={title} />
           )}

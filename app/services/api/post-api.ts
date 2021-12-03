@@ -29,7 +29,8 @@ export class PostAPI {
         userId: response.data.userId,
         postText: response.data.postText,
         dateTime: response.data.dateTime,
-        parentId: response.data.parentId
+        parentId: response.data.parentId,
+        media: response.data.media
       }
       return { kind: "ok", post: resultPost }
     } catch {

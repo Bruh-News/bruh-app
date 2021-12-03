@@ -6,10 +6,11 @@ import { Instance, SnapshotOut, types } from "mobx-state-tree"
 export const PostModel = types
   .model("Post")
   .props({
-    userId: types.number,
-    postText: types.string,
     dateTime: types.string,
-    parentId: types.maybe(types.number)
+    media: types.maybeNull(types.string),
+    parentId: types.maybe(types.number),
+    postText: types.string,
+    userId: types.number
   });
 
 type PostType = Instance<typeof PostModel>

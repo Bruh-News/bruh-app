@@ -23,7 +23,8 @@ export interface Post {
   userId: number,
   postText: string,
   dateTime: string,
-  parentId: null
+  parentId: null,
+  media: null
 }
 
 export type NoPayloadResult= { kind: "ok"; } | GeneralApiProblem
