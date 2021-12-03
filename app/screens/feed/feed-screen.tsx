@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ActivityIndicator, SectionList, ViewStyle } from "react-native"
+import { ActivityIndicator, SectionList, TextStyle, ViewStyle } from "react-native"
 import { Post, Screen, Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
@@ -9,6 +9,12 @@ import { color } from "../../theme"
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.offWhite,
   flex: 1,
+}
+
+const DIVIDER: TextStyle = {
+  color: color.palette.lightGrey,
+  textAlign: "center",
+  fontWeight: "normal"
 }
 
 export const FeedScreen = observer(function FeedScreen() {
@@ -57,7 +63,9 @@ export const FeedScreen = observer(function FeedScreen() {
           keyExtractor={(page , index) => page + index}
           renderItem={({ item }: any) => <Post post={item} />}
           renderSectionHeader={({ section: { title }}) => (
-            <Text preset="header" text={title} />
+            title !== "Page 1" ?
+              <Text preset="header" style={DIVIDER} text={title} />
+            : null
           )}
         />
       );
@@ -88,7 +96,6 @@ export const FeedScreen = observer(function FeedScreen() {
   // const navigation = useNavigation()
   return (
     <Screen style={ROOT} preset="fixed">
-      <Text preset="header" text="Yeet" />
       <FeedLoadingDisplayChain />
     </Screen>
   )
