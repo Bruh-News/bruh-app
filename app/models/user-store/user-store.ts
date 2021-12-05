@@ -18,7 +18,7 @@ export const UserStoreModel = types
     }
   }))
   .actions((self) => ({
-    getUser: async (userId: number) => {
+    setUser: async (userId: number) => {
       const userAPI = new UserAPI(self.environment.api);
       const result = await userAPI.getUser(userId);
 
