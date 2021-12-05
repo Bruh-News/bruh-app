@@ -26,8 +26,15 @@ export const FeedScreen = observer(function FeedScreen() {
   const postsPerPage = 7;
   const user = 5; // Replace with app registered user
 
+  // Delaying load cus some Ignite bloatware somewhere causing recursion errors
+  const delayed_setLoading = (val: boolean) => {
+    setTimeout(() => {
+      delayed_setLoading(val);
+    }, 500);
+  }
+
   const fetchNewPage = (page: number) => {
-    setLoading(true);
+    delayed_setLoading(true);
     setError(false);
     feedStore.getFeed(user, page, postsPerPage)
       .then(() => {
@@ -40,7 +47,7 @@ export const FeedScreen = observer(function FeedScreen() {
         setError(true);
       })
       .finally(() => {
-        setLoading(false);
+        delayed_setLoading(false);
       })
   }
 

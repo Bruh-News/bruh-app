@@ -33,7 +33,13 @@ const Stack = createNativeStackNavigator<NavigatorParamList>()
 
 const AppStack = () => {
   const [loading, setLoading] = useState(true);
-  const signedIn = true;
+
+  // Delaying load cus some Ignite bloatware somewhere causing recursion errors
+  const delayed_setLoading = (val: boolean) => {
+    setTimeout(() => {
+      setLoading(val);
+    }, 500);
+  }
 
   if(loading) {
     return <SplashScreen />
