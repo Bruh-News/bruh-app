@@ -20,51 +20,44 @@ const DIVIDER: TextStyle = {
 export const FeedScreen = observer(function FeedScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [pages, setPages] = useState([]);
   const { feedStore } = useStores();
-  const { posts } = feedStore;
+  const { feed } = feedStore;
+  const [displayFeed, setDisplayFeed] = useState([]);
   const postsPerPage = 7;
   const user = 5; // Replace with app registered user
 
-  const parsePages = () => {
-    let paginated = [];
-    for(let k = 0; k < posts.length; k++) {
-      if(k % postsPerPage === 0) {
-        paginated.push({
-          title: "Page " + ((k / postsPerPage) + 1),
-          data: []
-        });
-      }
-
-      paginated[paginated.length - 1].data.push(posts[k]);
-    }
-    setPages(paginated);
+  const fetchNewPage = (page: number) => {
+    setLoading(true);
+    setError(false);
+    feedStore.getFeed(user, page, postsPerPage)
+      .then(() => {
+        setDisplayFeed([...displayFeed, {
+          page,
+          data: feed.slice()
+        }]);
+      })
+      .catch(e => {
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      })
   }
 
   useEffect(() => {
-    async function fetchData() {
-      await feedStore.getFeed(user);
-    }
-
-    fetchData().then(() => {
-      setLoading(false);
-      parsePages();
-    }).catch(() => {
-      setLoading(false);
-      setError(true);
-    });
+    fetchNewPage(1);
   }, [])
 
   const FeedDataDisplayChain = () => {
-    if(pages.length > 0) {
+    if(displayFeed.length > 0) {
       return (
         <SectionList
-          sections={pages}
-          keyExtractor={(page , index) => page + index}
+          sections={displayFeed}
+          keyExtractor={(page, index) => page + index}
           renderItem={({ item }: any) => <Post post={item} />}
-          renderSectionHeader={({ section: { title }}) => (
-            title !== "Page 1" ?
-              <Text preset="header" style={DIVIDER} text={title} />
+          renderSectionHeader={({ section: { page }}) => (
+            page !== 1 ?
+              <Text preset="header" style={DIVIDER} text={"Page " + page} />
             : null
           )}
         />

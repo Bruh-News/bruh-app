@@ -9,18 +9,18 @@ import { withEnvironment } from "../extensions/with-environment";
 export const FeedModel = types
   .model("FeedStore")
   .props({
-    posts: types.optional(types.array(PostModel), [])
+    feed: types.optional(types.array(PostModel), [])
   })
   .extend(withEnvironment)
   .actions((self) => ({
-    saveFeed: (posts: PostSnapshot[]) => {
-      self.posts.replace(posts);
+    saveFeed: (page: Array<PostSnapshot>) => {
+      self.feed.replace(page);
     }
   }))
   .actions((self) => ({
-    getFeed: async (user: number) => {
+    getFeed: async (user: number, page: number, pageLength: number) => {
       const postAPI = new PostAPI(self.environment.api);
-      const result = await postAPI.getPostsForUser(user);
+      const result = await postAPI.getPostsInUserFeed(user, page, pageLength);
 
       if(result.kind === "ok") {
         self.saveFeed(result.posts);
