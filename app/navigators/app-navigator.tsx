@@ -49,7 +49,7 @@ const AppStack = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="feed"
+        initialRouteName={signedIn ? "feed" : "onboarding"}
       >
         {
           signedIn ?
@@ -93,5 +93,5 @@ AppNavigator.displayName = "AppNavigator"
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = ["feed"]
+const exitRoutes = ["feed", "onboarding"]
 export const canExit = (routeName: string) => exitRoutes.includes(routeName)
