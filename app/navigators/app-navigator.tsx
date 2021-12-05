@@ -4,12 +4,14 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { FeedScreen, OnboardingScreen, SplashScreen } from "../screens"
 import { navigationRef } from "./navigation-utilities"
+import * as Storage from "../utils/storage";
+import { useStores } from "../models"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -33,6 +35,9 @@ const Stack = createNativeStackNavigator<NavigatorParamList>()
 
 const AppStack = () => {
   const [loading, setLoading] = useState(true);
+  const [signedIn, setSignedIn] = useState(false);
+  const [error, setError] = useState(false);
+  const { userStore } = useStores();
 
   // Delaying load cus some Ignite bloatware somewhere causing recursion errors
   const delayed_setLoading = (val: boolean) => {
@@ -40,6 +45,33 @@ const AppStack = () => {
       setLoading(val);
     }, 500);
   }
+
+  useEffect(() => {
+    Storage.loadString("user")
+      .then((id) => {
+        if(id === null) {
+          setSignedIn(false);
+          delayed_setLoading(false);
+        } else {
+          userStore.setUser(Number.parseInt(id))
+            .then(() => {
+              setSignedIn(true);
+            })
+            .catch((e) => {
+              console.error(e);
+              setError(true);
+            })
+            .finally(() => {
+              setLoading(false);
+            })
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+        setError(true);
+        delayed_setLoading(false);
+      });
+  }, [])
 
   if(loading) {
     return <SplashScreen />
