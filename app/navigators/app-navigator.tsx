@@ -4,11 +4,11 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import React from "react"
+import React, { useState } from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { FeedScreen } from "../screens"
+import { FeedScreen, OnboardingScreen, SplashScreen } from "../screens"
 import { navigationRef } from "./navigation-utilities"
 
 /**
@@ -24,23 +24,41 @@ import { navigationRef } from "./navigation-utilities"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type NavigatorParamList = {
-  feed: undefined
+  feed: undefined,
+  onboarding: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<NavigatorParamList>()
 
 const AppStack = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName="feed"
-    >
-      <Stack.Screen name="feed" component={FeedScreen} />
-    </Stack.Navigator>
-  )
+  const [loading, setLoading] = useState(true);
+  const signedIn = true;
+
+  if(loading) {
+    return <SplashScreen />
+  } else {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName="feed"
+      >
+        {
+          signedIn ?
+            <>
+              <Stack.Screen name="feed" component={FeedScreen} />
+            </>
+          :
+            <>
+              <Stack.Screen name="onboarding" component={OnboardingScreen} />
+            </>
+        }
+      </Stack.Navigator>
+    )
+  }
+
 }
 
 interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
