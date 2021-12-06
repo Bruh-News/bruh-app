@@ -1,6 +1,6 @@
 import * as React from "react"
 import { ActivityIndicator, StyleProp, ViewStyle } from "react-native"
-import { Button } from "../"
+import { Button } from ".."
 import { observer } from "mobx-react-lite"
 import { color } from "../../theme"
 import { useStores } from "../../models"
