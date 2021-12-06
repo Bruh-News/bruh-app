@@ -29,7 +29,7 @@ export const FeedScreen = observer(function FeedScreen() {
   // Delaying load cus some Ignite bloatware somewhere causing recursion errors
   const delayed_setLoading = (val: boolean) => {
     setTimeout(() => {
-      delayed_setLoading(val);
+      setLoading(val);
     }, 500);
   }
 
