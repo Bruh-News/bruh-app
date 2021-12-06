@@ -26,7 +26,6 @@ const BUTTON: ViewStyle = {
 }
 
 const ACTIONS: ViewStyle = {
-  justifyContent: "flex-end"
 }
 
 const CARD: ViewStyle = {

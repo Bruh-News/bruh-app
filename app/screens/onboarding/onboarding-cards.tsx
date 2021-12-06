@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import RNRestart from "react-native-restart";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, ViewStyle } from "react-native";
 import { TextField, Button } from "../../components";
 import { color } from "../../theme";
 
@@ -8,6 +8,14 @@ export interface OnboardingCard {
     title: string,
     subtitle: string,
     actions: ReactNode
+}
+
+const SUBMIT: ViewStyle = {
+    marginTop: 32
+}
+
+const FIELD: ViewStyle = {
+    marginVertical: 8
 }
 
 const Submit = (props: {
@@ -21,6 +29,7 @@ const Submit = (props: {
 
     return (
         <Button
+            style={SUBMIT}
             text={props.loadingState[0] ? null : "Next"}
             children={
                 props.loadingState[0] ?
@@ -53,6 +62,7 @@ const politicalLeaning: OnboardingCard = {
         return (
             <>
                 <TextField
+                    style={FIELD}
                     label="Political Leaning"
                     onChangeText={setPL}
                     value={pl}
@@ -75,6 +85,7 @@ const finishingCard: OnboardingCard = {
     actions: () => {
         return (
             <Button
+                style={SUBMIT}
                 text="Enter"
                 onPress={() => RNRestart.Restart()}
             />
