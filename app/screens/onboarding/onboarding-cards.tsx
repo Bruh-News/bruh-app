@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from "react";
+import RNRestart from "react-native-restart";
 import { ActivityIndicator } from "react-native";
 import { TextField, Button } from "../../components";
 import { color } from "../../theme";
@@ -65,6 +66,23 @@ const politicalLeaning: OnboardingCard = {
     
 }
 
+/**
+ * Finishing Card
+ */
+const finishingCard: OnboardingCard = {
+    title: "You're good to go!",
+    subtitle: "Get ready to question your own beliefs and understand the rest of humanity.",
+    actions: () => {
+        return (
+            <Button
+                text="Enter"
+                onPress={() => RNRestart.Restart()}
+            />
+        )
+    }
+}
+
 export const questions: Array<OnboardingCard> = [
-    politicalLeaning
+    politicalLeaning,
+    finishingCard
 ]
