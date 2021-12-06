@@ -1,7 +1,8 @@
-import React, { ReactNode, useRef } from "react"
+import React, { ReactNode, useRef, useState } from "react"
+import _ from "lodash";
 import { observer } from "mobx-react-lite"
 import { Dimensions, View, ViewStyle } from "react-native"
-import { Screen, Button, Card, Text } from "../../components"
+import { Screen, Button, Card, Text, Auth } from "../../components"
 import Carousel from "react-native-snap-carousel";
 import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
@@ -35,28 +36,53 @@ const TITLE: ViewStyle = {
 
 }
 
+interface OnboardingCardInterface {
+  title: string,
+  subtitle: string,
+  actions: ReactNode
+}
+
 export const OnboardingScreen = observer(function OnboardingScreen() {
+  const [signIn, setSignIn] = useState(false);
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
 
   // Pull in navigation via hook
   // const navigation = useNavigation()
-  const carouselRef = useRef();
+  const carouselRef = useRef<Carousel>(null);
 
-  const cards: Array<{
-    title: string,
-    subtitle: string,
-    actions: ReactNode
-  }> = [
+  const cards: Array<OnboardingCardInterface> = [
     {
       title: "Bruh",
       subtitle: "You gotta sign in",
       actions: (
         <>
-          <Button style={BUTTON} text="Log In" />
-          <Button style={BUTTON} text="Sign Up" />
+          <Button
+            style={BUTTON}
+            text="Log In"
+            onPress={() => {
+              if(_.get(carouselRef, "current.snapToNext") !== null) {
+                setSignIn(true);
+                carouselRef.current.snapToNext();
+              }
+            }}
+          />
+          <Button
+            style={BUTTON}
+            text="Sign Up"
+            onPress={() => {
+              if(_.get(carouselRef, "current.snapToNext") !== null) {
+                carouselRef.current.snapToNext()
+              }
+            }}
+          />
         </>
       )
+    },
+    {
+      title: signIn ? "Log In" : "Register",
+      subtitle: signIn ? "Welcome back!" : "Join the movement!",
+      actions: <Auth fieldStyle={BUTTON} signIn={signIn} />
     }
   ]
   const index = 0;
