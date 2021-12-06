@@ -33,22 +33,20 @@ export const FeedScreen = observer(function FeedScreen() {
     }, 500);
   }
 
-  const fetchNewPage = (page: number) => {
+  const fetchNewPage = async (page: number) => {
     delayed_setLoading(true);
     setError(false);
-    feedStore.getFeed(user, page, postsPerPage)
-      .then(() => {
-        setDisplayFeed([...displayFeed, {
-          page,
-          data: feed.slice()
-        }]);
-      })
-      .catch(e => {
-        setError(true);
-      })
-      .finally(() => {
-        delayed_setLoading(false);
-      })
+    try {
+      await feedStore.getFeed(user, page, postsPerPage)
+    } catch(e) {
+      console.error(e);
+      setError(true);
+    }
+    setDisplayFeed([...displayFeed, {
+      page,
+      data: feed.slice()
+    }]);
+    delayed_setLoading(false);
   }
 
   useEffect(() => {
