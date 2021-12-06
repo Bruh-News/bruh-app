@@ -8,7 +8,7 @@ import Carousel from "react-native-snap-carousel";
 import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
 import { color } from "../../theme"
-import { OnboardingCard, questions } from "./onboarding-cards";
+import { getQuestionCards, OnboardingCard } from "./onboarding-cards";
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.offWhite,
@@ -91,7 +91,7 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
         }} />
       )
     },
-    ...questions
+    ...getQuestionCards(carouselRef)
   ]
 
   return (

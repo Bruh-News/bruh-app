@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from "react";
 import RNRestart from "react-native-restart";
-import { ActivityIndicator, ViewStyle } from "react-native";
-import { TextField, Button } from "../../components";
-import { color } from "../../theme";
+import { ViewStyle } from "react-native";
+import { TextField, Button, SubmitButton } from "../../components";
+import Carousel from "react-native-snap-carousel";
 
 export interface OnboardingCard {
     title: string,
@@ -10,90 +10,75 @@ export interface OnboardingCard {
     actions: ReactNode
 }
 
-const SUBMIT: ViewStyle = {
-    marginTop: 32
-}
-
 const FIELD: ViewStyle = {
     marginVertical: 8
 }
 
-const Submit = (props: {
-    loadingState: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
-    id: string,
-    value: string
-}) => {
-    const submitAttribute = () => {
-        console.log("SUBMIT ATTRIBUTE " + props.id + ": " + props.value);
-    }
-
-    return (
-        <Button
-            style={SUBMIT}
-            text={props.loadingState[0] ? null : "Next"}
-            children={
-                props.loadingState[0] ?
-                    <ActivityIndicator color={color.palette.white} size="large" />
-                : null
-            }
-            onPress={() => submitAttribute()}
-            disabled={props.loadingState[0]}
-        />
-    )
+const SUBMIT: ViewStyle = {
+    marginTop: 32
 }
 
-/**
- * Profile Cards
- */
+export const getQuestionCards = (carouselRef: React.MutableRefObject<Carousel>): Array<OnboardingCard> => {
 
-// TBD
+    /**
+     * Profile Cards
+     */
 
-/**
- * Attribute Cards
- */
+    // TBD
 
-const politicalLeaning: OnboardingCard = {
-    title: "Political Leaning",
-    subtitle: "progressive, conservative, anarchist, capitalist, anarchocapitalist? Whatever direction you want.",
-    actions: () => {
-        const loadingState = useState(false);
-        const [pl, setPL] = useState("");
+    /**
+     * Attribute Cards
+     */
 
-        return (
-            <>
-                <TextField
-                    style={FIELD}
-                    label="Political Leaning"
-                    onChangeText={setPL}
-                    value={pl}
-                    editable={!loadingState[0]}
+    const politicalLeaning: OnboardingCard = {
+        title: "Political Leaning",
+        subtitle: "progressive, conservative, anarchist, capitalist, anarchocapitalist? Whatever direction you want.",
+        actions: () => {
+            const loadingState = useState(false);
+            const [pl, setPL] = useState("");
+
+            return (
+                <>
+                    <TextField
+                        style={FIELD}
+                        label="Political Leaning"
+                        onChangeText={setPL}
+                        value={pl}
+                        editable={!loadingState[0]}
+                    />
+                    <SubmitButton
+                        style={SUBMIT}
+                        loadingState={loadingState}
+                        id="politicalleaning"
+                        value={pl}
+                        onSubmit={() => carouselRef.current.snapToNext()}
+                    />
+                </>
+            )
+
+        }
+        
+    }
+
+    /**
+     * Finishing Card
+     */
+    const finishingCard: OnboardingCard = {
+        title: "You're good to go!",
+        subtitle: "Get ready to question your own beliefs and understand the rest of humanity.",
+        actions: () => {
+            return (
+                <Button
+                    style={SUBMIT}
+                    text="Enter"
+                    onPress={() => RNRestart.Restart()}
                 />
-                <Submit loadingState={loadingState} id="politicalleaning" value={pl}/>
-            </>
-        )
-
+            )
+        }
     }
-    
-}
 
-/**
- * Finishing Card
- */
-const finishingCard: OnboardingCard = {
-    title: "You're good to go!",
-    subtitle: "Get ready to question your own beliefs and understand the rest of humanity.",
-    actions: () => {
-        return (
-            <Button
-                style={SUBMIT}
-                text="Enter"
-                onPress={() => RNRestart.Restart()}
-            />
-        )
-    }
+    return [
+        politicalLeaning,
+        finishingCard
+    ]
 }
-
-export const questions: Array<OnboardingCard> = [
-    politicalLeaning,
-    finishingCard
-]
