@@ -60,10 +60,9 @@ export class UserAPI {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem
     }
-
     // transform the data into the format we are expecting
     try {
-      const id: number = response.data.id;
+      const id: number = response.data;
       return { kind: "ok", id }
     } catch {
       return { kind: "bad-data" }
