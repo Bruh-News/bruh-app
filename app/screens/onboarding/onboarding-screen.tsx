@@ -92,8 +92,6 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
     },
     ...questions
   ]
-  const index = 0;
-  const item = cards[0];
 
   return (
     <Screen style={ROOT} preset="scroll">
