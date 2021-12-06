@@ -43,6 +43,14 @@ export const UserStoreModel = types
       } else {
         __DEV__ && console.tron.log(result.kind);
       }
+    },
+    postAttributes: async (attributes: object) => {
+      const userAPI = new UserAPI(self.environment.api);
+      const result = await userAPI.setUserAttributes(self.user.id.toString(), attributes);
+
+      if(result.kind !== "ok") {
+        __DEV__ && console.tron.log(result.kind);
+      }
     }
   }))
   .actions((self) => ({
