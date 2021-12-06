@@ -3,7 +3,7 @@ import RNRestart from "react-native-restart";
 import _ from "lodash";
 import { observer } from "mobx-react-lite"
 import { Dimensions, View, ViewStyle } from "react-native"
-import { Screen, Button, Card, Text, Auth } from "../../components"
+import { Screen, Button, Card, Text, Auth, ErrorCard } from "../../components"
 import Carousel from "react-native-snap-carousel";
 import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
@@ -99,12 +99,7 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
     <Screen style={ROOT} preset="scroll">
       {
         error ?
-          <Card style={CARD}>
-            <View style={TITLE}>
-              <Text preset="header" text="Big Yikes!" />
-              <Text preset="default" text="Looks like something went wrong there. Try again later or contact support for assistance." />
-            </View>
-          </Card>
+          <ErrorCard />
         :
           <Carousel
             ref={carouselRef}
