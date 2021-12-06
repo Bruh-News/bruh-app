@@ -21,7 +21,7 @@ export interface SubmitButtonProps {
 /**
  * Describe your component here
  */
-export const SubmitButton = observer(function SubmitButton(props: SubmitButtonProps) {
+export const AttributeSubmitButton = observer(function SubmitButton(props: SubmitButtonProps) {
   const { style } = props
 
   const { userStore } = useStores();

@@ -2,14 +2,14 @@ import * as React from "react"
 import { storiesOf } from "@storybook/react-native"
 import { StoryScreen, Story, UseCase } from "../../../storybook/views"
 import { color } from "../../theme"
-import { SubmitButton } from "./submit-button"
+import { AttributeSubmitButton } from "./submit-button"
 
 storiesOf("SubmitButton", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Primary" usage="The primary.">
-        <SubmitButton style={{ backgroundColor: color.error }} />
+        <AttributeSubmitButton style={{ backgroundColor: color.error }} />
       </UseCase>
     </Story>
   ))

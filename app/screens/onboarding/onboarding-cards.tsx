@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import RNRestart from "react-native-restart";
 import { ViewStyle } from "react-native";
-import { TextField, Button, SubmitButton } from "../../components";
+import { TextField, Button, AttributeSubmitButton } from "../../components";
 import Carousel from "react-native-snap-carousel";
 
 export interface OnboardingCard {
@@ -46,7 +46,7 @@ export const getQuestionCards = (carouselRef: React.MutableRefObject<Carousel>):
                         value={pl}
                         editable={!loadingState[0]}
                     />
-                    <SubmitButton
+                    <AttributeSubmitButton
                         style={SUBMIT}
                         loadingState={loadingState}
                         id="politicalleaning"
