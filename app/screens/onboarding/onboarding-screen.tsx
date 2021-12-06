@@ -8,6 +8,7 @@ import Carousel from "react-native-snap-carousel";
 import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
 import { color } from "../../theme"
+import { OnboardingCard, questions } from "./onboarding-cards";
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.offWhite,
@@ -37,14 +38,9 @@ const TITLE: ViewStyle = {
 
 }
 
-interface OnboardingCardInterface {
-  title: string,
-  subtitle: string,
-  actions: ReactNode
-}
-
 export const OnboardingScreen = observer(function OnboardingScreen() {
   const [signIn, setSignIn] = useState(false);
+  const [error, setError] = useState(false);
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
 
@@ -52,7 +48,7 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
   // const navigation = useNavigation()
   const carouselRef = useRef<Carousel>(null);
 
-  const cards: Array<OnboardingCardInterface> = [
+  const cards: Array<OnboardingCard> = [
     {
       title: "Bruh",
       subtitle: "You gotta sign in",
@@ -94,6 +90,7 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
         }
       }} />
     },
+    ...questions
   ]
   const index = 0;
   const item = cards[0];
