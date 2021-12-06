@@ -14,6 +14,10 @@ const ROOT: ViewStyle = {
   justifyContent:"center"
 }
 
+const SCROLL_CONTAINER: ViewStyle = {
+  justifyContent: "center"
+}
+
 const BUTTON: ViewStyle = {
   marginVertical: 8
 }
@@ -66,6 +70,7 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
         itemWidth={Dimensions.get('window').width}
         data={cards}
         scrollEnabled={false}
+        slideStyle={SCROLL_CONTAINER}
         renderItem={({item}, index) => (
           <Card key={index} style={CARD}>
             <View style={TITLE}>
