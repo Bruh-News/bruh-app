@@ -33,6 +33,19 @@ export const UserStoreModel = types
     }
   }))
   .actions((self) => ({
+    registerUser: async (username: string, password: string, email: string) => {
+      const userAPI = new UserAPI(self.environment.api);
+      const result = await userAPI.createUser(username, email, password);
+
+      if(result.kind === "ok") {
+        const userId: number = result.id;
+        self.setUser(userId);
+      } else {
+        __DEV__ && console.tron.log(result.kind);
+      }
+    }
+  }))
+  .actions((self) => ({
     getUser: async () => {
       if(self.user === null) {
         const userId = await Storage.loadString("user");
