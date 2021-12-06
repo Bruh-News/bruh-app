@@ -1,4 +1,5 @@
 import React, { ReactNode, useRef, useState } from "react"
+import RNRestart from "react-native-restart";
 import _ from "lodash";
 import { observer } from "mobx-react-lite"
 import { Dimensions, View, ViewStyle } from "react-native"
@@ -72,7 +73,7 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
             text="Sign Up"
             onPress={() => {
               if(_.get(carouselRef, "current.snapToNext") !== null) {
-                carouselRef.current.snapToNext()
+                carouselRef.current.snapToNext();
               }
             }}
           />
@@ -82,8 +83,17 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
     {
       title: signIn ? "Log In" : "Register",
       subtitle: signIn ? "Welcome back!" : "Join the movement!",
-      actions: <Auth fieldStyle={BUTTON} signIn={signIn} />
-    }
+      actions: <Auth fieldStyle={BUTTON} signIn={signIn} onSubmit={(userId, err) => {
+        if(err) {
+          console.error(err);
+          setError(true);
+        } else if(signIn) {
+          RNRestart.Restart();
+        } else {
+          carouselRef.current.snapToNext();
+        }
+      }} />
+    },
   ]
   const index = 0;
   const item = cards[0];
