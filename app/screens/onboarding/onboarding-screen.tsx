@@ -95,25 +95,35 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <Carousel
-        ref={carouselRef}
-        sliderWidth={Dimensions.get('window').width}
-        itemWidth={Dimensions.get('window').width}
-        data={cards}
-        scrollEnabled={false}
-        slideStyle={SCROLL_CONTAINER}
-        renderItem={({item}, index) => (
-          <Card key={index} style={CARD}>
+      {
+        error ?
+          <Card style={CARD}>
             <View style={TITLE}>
-              <Text preset="header" text={item.title} />
-              <Text preset="default" text={item.subtitle} />
-            </View>
-            <View style={ACTIONS}>
-              {item.actions}
+              <Text preset="header" text="Big Yikes!" />
+              <Text preset="default" text="Looks like something went wrong there. Try again later or contact support for assistance." />
             </View>
           </Card>
-        )}
-      />
+        :
+          <Carousel
+            ref={carouselRef}
+            sliderWidth={Dimensions.get('window').width}
+            itemWidth={Dimensions.get('window').width}
+            data={cards}
+            scrollEnabled={false}
+            slideStyle={SCROLL_CONTAINER}
+            renderItem={({item}, index) => (
+              <Card key={index} style={CARD}>
+                <View style={TITLE}>
+                  <Text preset="header" text={item.title} />
+                  <Text preset="default" text={item.subtitle} />
+                </View>
+                <View style={ACTIONS}>
+                  {item.actions}
+                </View>
+              </Card>
+            )}
+          />
+      }
     </Screen>
   )
 })
