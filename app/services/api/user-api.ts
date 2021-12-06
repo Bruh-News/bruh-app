@@ -75,7 +75,7 @@ export class UserAPI {
   async setUserAttributes(userId : string, attributes: object): Promise<Types.NoPayloadResult> {
 
     // preparing the payload
-    let payload: Array<Types.AttributeRecord>;
+    let payload: Array<Types.AttributeRecord> = [];
     for(const attr in attributes) {
       payload.push({
         userId,
