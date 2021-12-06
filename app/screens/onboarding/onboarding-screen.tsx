@@ -52,7 +52,7 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
     {
       title: "Bruh",
       subtitle: "You gotta sign in",
-      actions: (
+      actions: () => (
         <>
           <Button
             style={BUTTON}
@@ -79,16 +79,18 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
     {
       title: signIn ? "Log In" : "Register",
       subtitle: signIn ? "Welcome back!" : "Join the movement!",
-      actions: <Auth fieldStyle={BUTTON} signIn={signIn} onSubmit={(userId, err) => {
-        if(err) {
-          console.error(err);
-          setError(true);
-        } else if(signIn) {
-          RNRestart.Restart();
-        } else {
-          carouselRef.current.snapToNext();
-        }
-      }} />
+      actions: () => (
+        <Auth fieldStyle={BUTTON} signIn={signIn} onSubmit={(userId, err) => {
+          if(err) {
+            console.error(err);
+            setError(true);
+          } else if(signIn) {
+            RNRestart.Restart();
+          } else {
+            carouselRef.current.snapToNext();
+          }
+        }} />
+      )
     },
     ...questions
   ]
@@ -111,17 +113,20 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
             data={cards}
             scrollEnabled={false}
             slideStyle={SCROLL_CONTAINER}
-            renderItem={({item}, index) => (
+            renderItem={({item}, index) => {
+              const Actions = item.actions;
+              return (
               <Card key={index} style={CARD}>
                 <View style={TITLE}>
                   <Text preset="header" text={item.title} />
                   <Text preset="default" text={item.subtitle} />
                 </View>
                 <View style={ACTIONS}>
-                  {item.actions}
+                  <Actions />
                 </View>
               </Card>
-            )}
+              )
+            }}
           />
       }
     </Screen>
