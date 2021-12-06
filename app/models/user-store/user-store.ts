@@ -39,7 +39,7 @@ export const UserStoreModel = types
 
       if(result.kind === "ok") {
         const userId: number = result.id;
-        self.setUser(userId);
+        await self.setUser(userId);
       } else {
         __DEV__ && console.tron.log(result.kind);
       }

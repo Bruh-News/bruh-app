@@ -80,7 +80,7 @@ export const OnboardingScreen = observer(function OnboardingScreen() {
       title: signIn ? "Log In" : "Register",
       subtitle: signIn ? "Welcome back!" : "Join the movement!",
       actions: () => (
-        <Auth fieldStyle={BUTTON} signIn={signIn} onSubmit={(userId, err) => {
+        <Auth fieldStyle={BUTTON} signIn={signIn} onSubmit={(err) => {
           if(err) {
             console.error(err);
             setError(true);

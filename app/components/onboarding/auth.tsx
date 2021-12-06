@@ -17,7 +17,7 @@ export interface AuthProps {
   style?: StyleProp<ViewStyle>,
   fieldStyle?: StyleProp<ViewStyle>,
   signIn?: boolean
-  onSubmit?: (userId: number, error?: string) => void
+  onSubmit?: (error?: string) => void
 }
 
 /**
@@ -39,14 +39,13 @@ export const Auth = observer(function Auth(props: AuthProps) {
     } else {
       userStore.registerUser(username, password, email)
         .then(() => {
-          onSubmit(userStore.user.id);
-        })
-        .catch((e) => {
-          onSubmit(null, e);
-        })
-        .finally(() => {
+          onSubmit();
           setLoading(false);
         })
+        .catch((e) => {
+          onSubmit(e);
+          setLoading(false);
+        });
     }
 
   }
