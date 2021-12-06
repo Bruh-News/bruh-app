@@ -15,10 +15,11 @@ export interface AuthProps {
   style?: StyleProp<ViewStyle>,
   fieldStyle?: StyleProp<ViewStyle>,
   signIn?: boolean
+  onSubmit?: (userId: string, error?: string) => void
 }
 
 /**
- * Describe your component here
+ * Fields for authentication
  */
 export const Auth = observer(function Auth(props: AuthProps) {
   const { style, signIn, fieldStyle } = props
