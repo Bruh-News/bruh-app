@@ -30,6 +30,7 @@ export const AttributeSubmitButton = observer(function SubmitButton(props: Submi
       const attr = {};
       attr[props.id] = props.value;
       await userStore.postAttributes(attr)
+      props.onSubmit();
       props.loadingState[1](false);
   }
 
