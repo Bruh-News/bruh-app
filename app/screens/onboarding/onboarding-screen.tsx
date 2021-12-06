@@ -28,7 +28,7 @@ const ACTIONS: ViewStyle = {
 }
 
 const CARD: ViewStyle = {
-  minHeight: 300,
+  minHeight: Dimensions.get("screen").height - 400,
   justifyContent: "space-between"
 }
 
