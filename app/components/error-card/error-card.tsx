@@ -11,7 +11,6 @@ const CONTAINER: ViewStyle = {
 
 const CARD: ViewStyle = {
   minHeight: Dimensions.get("screen").height - 400,
-  justifyContent: "space-between"
 }
 
 export interface ErrorCardProps {
@@ -37,6 +36,7 @@ export const ErrorCard = observer(function ErrorCard(props: ErrorCardProps) {
           <Text preset="default" text={error}/>
         </View>
           <Text preset="default" text="Looks like something went wrong there. Try again later or contact support for assistance." />
+          <Text preset="default" text="" />
       </Card>
     </View>
   )
