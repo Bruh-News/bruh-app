@@ -47,28 +47,15 @@ const AppStack = () => {
   }
 
   useEffect(() => {
-    Storage.loadString("user")
-      .then((id) => {
-        if(id === null) {
-          setSignedIn(false);
-          delayed_setLoading(false);
-        } else {
-          userStore.setUser(Number.parseInt(id))
-            .then(() => {
-              setSignedIn(true);
-            })
-            .catch((e) => {
-              console.error(e);
-              setError(true);
-            })
-            .finally(() => {
-              setLoading(false);
-            })
-        }
+    userStore.getUser()
+      .then((user) => {
+        setSignedIn(user !== null);
       })
       .catch((e) => {
         console.error(e);
         setError(true);
+      })
+      .finally(() => {
         delayed_setLoading(false);
       });
   }, [])

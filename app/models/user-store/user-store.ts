@@ -2,6 +2,7 @@ import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withEnvironment } from "../extensions/with-environment";
 import { UserModel, UserSnapshot } from "../user/user";
 import { UserAPI } from "../../services/api/user-api"
+import * as Storage from "../../utils/storage";
 
 /**
  * Model description here for TypeScript hints.
@@ -24,10 +25,24 @@ export const UserStoreModel = types
 
       if(result.kind === "ok") {
         const user: UserSnapshot = result.user;
+        await Storage.saveString("user", userId.toString())
         self.saveUser(user);
       } else {
         __DEV__ && console.tron.log(result.kind);
       }
+    }
+  }))
+  .actions((self) => ({
+    getUser: async () => {
+      if(self.user === null) {
+        const userId = await Storage.loadString("user");
+        if(userId === null) {
+          return null;
+        } else {
+          await self.setUser(Number.parseInt(userId));
+        }
+      }
+      return self.user;
     }
   }));
 
