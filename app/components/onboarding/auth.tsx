@@ -1,8 +1,10 @@
 import React, { useState } from "react"
-import { StyleProp, View, ViewStyle } from "react-native"
+import { ActivityIndicator, StyleProp, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { Button, TextField } from "../"
 import { flatten } from "ramda"
+import { useStores } from "../../models"
+import { color } from "../../theme"
 
 const CONTAINER: ViewStyle = {
   justifyContent: "center",
@@ -15,21 +17,38 @@ export interface AuthProps {
   style?: StyleProp<ViewStyle>,
   fieldStyle?: StyleProp<ViewStyle>,
   signIn?: boolean
-  onSubmit?: (userId: string, error?: string) => void
+  onSubmit?: (userId: number, error?: string) => void
 }
 
 /**
  * Fields for authentication
  */
 export const Auth = observer(function Auth(props: AuthProps) {
-  const { style, signIn, fieldStyle } = props
+  const { style, signIn, fieldStyle, onSubmit } = props
   const styles = flatten([CONTAINER, style])
+  const { userStore } = useStores();
+  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   const authenticate = () => {
-    console.log("AUTHENTICATING");
+    setLoading(true);
+    if(signIn) {
+      // TBD
+    } else {
+      userStore.registerUser(username, password, email)
+        .then(() => {
+          onSubmit(userStore.user.id);
+        })
+        .catch((e) => {
+          onSubmit(null, e);
+        })
+        .finally(() => {
+          setLoading(false);
+        })
+    }
+
   }
 
   return (
@@ -41,6 +60,7 @@ export const Auth = observer(function Auth(props: AuthProps) {
         value={username}
         autoCompleteType="username"
         textContentType="username"
+        editable={!loading}
       />
       <TextField
         style={fieldStyle}
@@ -50,6 +70,7 @@ export const Auth = observer(function Auth(props: AuthProps) {
         autoCompleteType="password"
         secureTextEntry={true}
         textContentType="password"
+        editable={!loading}
       />
       {
         !signIn ?
@@ -60,13 +81,25 @@ export const Auth = observer(function Auth(props: AuthProps) {
             value={email}
             autoCompleteType="email"
             textContentType="emailAddress"
+            editable={!loading}
           />
         : null
       }
       <Button
         style={fieldStyle}
-        text={signIn ? "Log In" : "Register"}
+        text={
+          loading ?
+            null
+          :
+            signIn ? "Log In" : "Register"
+        }
+        children={
+          loading ?
+            <ActivityIndicator color={color.palette.white} size="large" />
+          : null
+        }
         onPress={() => authenticate()}
+        disabled={loading}
       />
     </View>
   )
