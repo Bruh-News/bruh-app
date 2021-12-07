@@ -12,6 +12,7 @@ import { FeedScreen, OnboardingScreen, SplashScreen } from "../screens"
 import { navigationRef } from "./navigation-utilities"
 import * as Storage from "../utils/storage";
 import { useStores } from "../models"
+import { HomeScreen } from "../screens/home/home-screen"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -26,7 +27,7 @@ import { useStores } from "../models"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type NavigatorParamList = {
-  feed: undefined,
+  home: undefined,
   onboarding: undefined
 }
 
@@ -68,12 +69,12 @@ const AppStack = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName={signedIn ? "feed" : "onboarding"}
+        initialRouteName={signedIn ? "home" : "onboarding"}
       >
         {
           signedIn ?
             <>
-              <Stack.Screen name="feed" component={FeedScreen} />
+              <Stack.Screen name="home" component={HomeScreen} />
             </>
           :
             <>
@@ -112,5 +113,5 @@ AppNavigator.displayName = "AppNavigator"
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = ["feed", "onboarding"]
+const exitRoutes = ["home", "onboarding"]
 export const canExit = (routeName: string) => exitRoutes.includes(routeName)
