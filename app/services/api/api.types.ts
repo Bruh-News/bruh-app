@@ -27,6 +27,12 @@ export interface Post {
   media: null
 }
 
+export interface NewPost {
+  uid: number,
+  postText: string,
+  secondsSinceEpoch: number
+}
+
 export type NoPayloadResult= { kind: "ok"; } | GeneralApiProblem
 export type GetUserResult = { kind: "ok"; user: User } | GeneralApiProblem
 export type CreateResult = { kind: "ok"; id: number } | GeneralApiProblem

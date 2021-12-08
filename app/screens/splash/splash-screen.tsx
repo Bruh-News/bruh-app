@@ -1,6 +1,6 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
+import { ActivityIndicator, ViewStyle } from "react-native"
 import { Screen, Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
@@ -9,6 +9,8 @@ import { color } from "../../theme"
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
   flex: 1,
+  justifyContent: "center",
+  alignItems: "center"
 }
 
 export const SplashScreen = observer(function SplashScreen() {
@@ -19,7 +21,7 @@ export const SplashScreen = observer(function SplashScreen() {
   // const navigation = useNavigation()
   return (
     <Screen style={ROOT} preset="scroll">
-      <Text preset="header" text="Loading..." />
+      <ActivityIndicator color={color.palette.white} size="large" />
     </Screen>
   )
 })

@@ -66,7 +66,10 @@ export class PostAPI {
   async getPostsInUserFeed(id: number, page: number, pageLength: number): Promise<Types.GetPostsResult> {
     // make the api call
     const response: ApiResponse<any> = await this.api.apisauce.get(`/getpostsinuserfeed?id=${id}&page=${page}&pageLength=${pageLength}`)
-
+    console.log("ID", id)
+    console.log("page", page)
+    console.log("pagelength", pageLength)
+    console.log("RESPONSE", response);
     // the typical ways to die when calling an api
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
@@ -85,7 +88,7 @@ export class PostAPI {
   /**
    * Creates a new user
    */
-  async createPost(post: Types.Post): Promise<Types.CreateResult> {
+  async createPost(post: Types.NewPost): Promise<Types.CreateResult> {
     // make the api call
     const response: ApiResponse<any> = await this.api.apisauce.post(`/createpost`, post);
 
