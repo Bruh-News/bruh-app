@@ -3,6 +3,8 @@ import { withEnvironment } from "../extensions/with-environment";
 import { UserModel, UserSnapshot } from "../user/user";
 import { UserAPI } from "../../services/api/user-api"
 import * as Storage from "../../utils/storage";
+import { PostAPI } from "../../services/api/post-api";
+import { NewPost } from "../../services/api";
 
 /**
  * Model description here for TypeScript hints.
@@ -64,6 +66,23 @@ export const UserStoreModel = types
         }
       }
       return self.user;
+    }
+  }))
+  .actions((self) => ({
+    createPost: async (post: {
+      postText: string
+    }) => {
+      const postAPI = new PostAPI(self.environment.api);
+      const newPost: NewPost = {
+        uid: self.user.id,
+        postText: post.postText,
+        secondsSinceEpoch: (new Date()).getSeconds()
+      }
+      const result = await postAPI.createPost(newPost);
+
+      if(result.kind !== "ok") {
+        __DEV__ && console.tron.log(result.kind);
+      }
     }
   }));
 
