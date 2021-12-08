@@ -20,11 +20,11 @@ const DIVIDER: TextStyle = {
 export const FeedScreen = observer(function FeedScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const { feedStore } = useStores();
+  const { feedStore, userStore } = useStores();
   const { feed } = feedStore;
+  const { user } = userStore;
   const [displayFeed, setDisplayFeed] = useState([]);
   const postsPerPage = 7;
-  const user = 5; // Replace with app registered user
 
   // Delaying load cus some Ignite bloatware somewhere causing recursion errors
   const delayed_setLoading = (val: boolean) => {
@@ -37,7 +37,7 @@ export const FeedScreen = observer(function FeedScreen() {
     delayed_setLoading(true);
     setError(false);
     try {
-      await feedStore.getFeed(user, page, postsPerPage)
+      await feedStore.getFeed(user.id, page, postsPerPage)
     } catch(e) {
       console.error(e);
       setError(true);
