@@ -86,7 +86,7 @@ export class PostAPI {
    */
   async createPost(post: Types.NewPost): Promise<Types.CreateResult> {
     // make the api call
-    const response: ApiResponse<any> = await this.api.apisauce.post(`/createpost`, post);
+    const response: ApiResponse<any> = await this.api.apisauce.post(`/createpost?uid=${post.uid}&postText=${post.postText}&secondsSinceEpoch=${post.secondsSinceEpoch}`);
 
     // the typical ways to die when calling an api
     if (!response.ok) {

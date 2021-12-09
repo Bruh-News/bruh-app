@@ -40,19 +40,33 @@ export const CreatePostScreen = observer(function CreatePostScreen() {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
   const navigation = useNavigation();
+  const { userStore } = useStores();
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
 
   const post = () => {
     setLoading(true);
-    setTimeout(() => {
-      Snackbar.show({
-        text: "Successfully created post!",
-        duration: Snackbar.LENGTH_LONG
+    const newPost = {
+       postText: text
+    }
+    userStore.createPost(newPost)
+      .then(() => {
+        setText("");
+        Snackbar.show({
+          text: "Successfully created post!",
+          duration: Snackbar.LENGTH_LONG
+        });
+        navigation.navigate('feed');
+        setText("");
+        setLoading(false);
+      }).catch((e) => {
+        console.error(e);
+        Snackbar.show({
+          text: "Error creating post! Please try again later or contact support for assistance.",
+          duration: Snackbar.LENGTH_LONG
+        });
+        setLoading(false);
       });
-      setLoading(false)
-      setText("");
-      navigation.navigate('feed');
   }
 
   // Pull in navigation via hook
