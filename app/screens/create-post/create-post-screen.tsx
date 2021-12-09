@@ -7,6 +7,7 @@ import { Button, Screen, Text, TextField } from "../../components"
 import { color } from "../../theme"
 import { useStores } from "../../models"
 import Snackbar from "react-native-snackbar"
+import { useNavigation } from "@react-navigation/native"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
