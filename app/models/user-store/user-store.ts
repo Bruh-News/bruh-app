@@ -82,6 +82,7 @@ export const UserStoreModel = types
 
       if(result.kind !== "ok") {
         __DEV__ && console.tron.log(result.kind);
+        throw result.kind;
       }
     }
   }));
