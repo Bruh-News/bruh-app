@@ -84,6 +84,7 @@ export const CreatePostScreen = observer(function CreatePostScreen() {
           onChangeText={setText}
           value={text}
           editable={!loading}
+          maxLength={280}
         />
         <View style={ACTIONS}>
           <Button
