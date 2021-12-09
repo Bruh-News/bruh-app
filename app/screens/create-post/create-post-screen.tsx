@@ -38,6 +38,7 @@ const ACTIONS: ViewStyle = {
 export const CreatePostScreen = observer(function CreatePostScreen() {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
+  const navigation = useNavigation();
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -50,7 +51,7 @@ export const CreatePostScreen = observer(function CreatePostScreen() {
       });
       setLoading(false)
       setText("");
-    })
+      navigation.navigate('feed');
   }
 
   // Pull in navigation via hook
