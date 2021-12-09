@@ -76,7 +76,7 @@ export const UserStoreModel = types
       const newPost: NewPost = {
         uid: self.user.id,
         postText: post.postText,
-        secondsSinceEpoch: (new Date()).getSeconds()
+        secondsSinceEpoch: (new Date()).valueOf()
       }
       const result = await postAPI.createPost(newPost);
 
