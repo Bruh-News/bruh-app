@@ -76,7 +76,7 @@ export const Post = observer(function Post(props: PostProps) {
         <View style={ACTIONS}>
           <View style={ACTION}>
             <ChatDots size={24} color={palette.lightGrey} />
-            <Text style={SECONDARY}>7 Comments</Text>
+            <Text style={SECONDARY}>Comments</Text>
           </View>
           <View style={ACTION}>
             <ShareNetwork size={24} color={palette.lightGrey} />
