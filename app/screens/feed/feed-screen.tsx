@@ -58,8 +58,11 @@ export const FeedScreen = observer(function FeedScreen() {
         data: [""]
       }
     ]);
+
     if(page !== 1 && typeof listRef.current !== "undefined") {
       setSectionLoading(false);
+
+      // Delaying scroll cus of state stuff somewhere, needs fixing
       setTimeout(() => {
         listRef.current.scrollToLocation({
           sectionIndex: page - 2,
