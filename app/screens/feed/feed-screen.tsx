@@ -9,7 +9,12 @@ import { color } from "../../theme"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.offWhite,
-  flex: 1,
+  flex: 1
+}
+
+const NEXT_BUTTON: ViewStyle = {
+  margin: 48,
+  marginBottom: 64
 }
 
 const DIVIDER: TextStyle = {
@@ -96,6 +101,7 @@ export const FeedScreen = observer(function FeedScreen() {
                 const lastPage = displayFeed[displayFeed.length - 2].page;
                 return (
                   <Button
+                    style={NEXT_BUTTON}
                     text={`Load Page ${lastPage + 1}`}
                     onPress={() => {
                       fetchNewPage(lastPage + 1, postsPerPage);
