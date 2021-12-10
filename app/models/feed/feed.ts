@@ -28,6 +28,11 @@ export const FeedModel = types
         __DEV__ && console.tron.log(result.kind);
       }
     }
+  }))
+  .actions((self) => ({
+    clearFeed: () => {
+      self.feed.clear();
+    }
   }));
 
 type FeedType = Instance<typeof FeedModel>
