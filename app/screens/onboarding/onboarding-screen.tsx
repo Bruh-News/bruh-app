@@ -1,12 +1,10 @@
-import React, { ReactNode, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import RNRestart from "react-native-restart";
 import _ from "lodash";
 import { observer } from "mobx-react-lite"
 import { Dimensions, View, ViewStyle } from "react-native"
 import { Screen, Button, Card, Text, Auth, ErrorCard } from "../../components"
 import Carousel from "react-native-snap-carousel";
-import { useNavigation } from "@react-navigation/native"
-import { useStores } from "../../models"
 import { color } from "../../theme"
 import { getQuestionCards, OnboardingCard } from "./onboarding-cards";
 
