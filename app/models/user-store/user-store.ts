@@ -53,6 +53,20 @@ export const UserStoreModel = types
       if(result.kind !== "ok") {
         __DEV__ && console.tron.log(result.kind);
       }
+    },
+    saveSettings: async (postsPerPage: number) => {
+      await Storage.saveString("postsPerPage", postsPerPage.toString());
+    },
+  }))
+  .actions((self) => ({
+    getSettings: async () => {
+      const result = await Storage.loadString("postsPerPage");
+      if(result !== null) {
+        return Number.parseInt(result);
+      } else {
+        await self.saveSettings(7);
+        return 7;
+      }
     }
   }))
   .actions((self) => ({

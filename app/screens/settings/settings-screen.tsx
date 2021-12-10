@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
+import RNRestart from "react-native-restart";
 import { observer } from "mobx-react-lite"
-import { ActivityIndicator, TextStyle, View, ViewStyle } from "react-native"
+import { ActivityIndicator, TextStyle, ViewStyle } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
 import { color } from "../../theme"
 import * as Storage from "../../utils/storage";
+import { useStores } from "../../models"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.offWhite,
@@ -21,33 +23,26 @@ const SUBMIT: ViewStyle = {
 
 export const SettingsScreen = observer(function SettingsScreen() {
   // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+  const { userStore } = useStores()
 
   // Pull in navigation via hook
   // const navigation = useNavigation()
   const [numPosts, setNumPosts] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [touched, setTouched] = useState(false);
 
   const save = async () => {
-    await Storage.saveString("PostsPerPage", numPosts.toString());
-    setLoading(false);
+    setLoading(true);
+    await userStore.saveSettings(Number.parseInt(numPosts));
+    RNRestart.Restart();
   }
 
   useEffect(() => {
-    Storage.loadString("PostsPerPage")
-      .then((val) => {
-        if(val !== null) {
-          setNumPosts(val);
-        } else {
-          throw NaN;
-        }
-        setLoading(false);
-      }).catch(() => {
-        setNumPosts("7");
-        Storage.saveString("PostsPerPage", "7");
-        setLoading(false);
-      });
+    (async () => {
+      const setting = await userStore.getSettings();
+      setNumPosts(setting.toString());
+      setLoading(false);
+    })();
   }, []);
 
   return (
