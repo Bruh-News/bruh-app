@@ -25,7 +25,7 @@ export const SettingsScreen = observer(function SettingsScreen() {
 
   // Pull in navigation via hook
   // const navigation = useNavigation()
-  const [numPosts, setNumPosts] = useState(7);
+  const [numPosts, setNumPosts] = useState("");
   const [loading, setLoading] = useState(false);
   const [touched, setTouched] = useState(false);
 
@@ -38,21 +38,21 @@ export const SettingsScreen = observer(function SettingsScreen() {
     Storage.loadString("PostsPerPage")
       .then((val) => {
         if(val !== null) {
-          setNumPosts(Number.parseInt(val));
+          setNumPosts(val);
         } else {
           throw NaN;
         }
         setLoading(false);
       }).catch(() => {
-        setNumPosts(7);
+        setNumPosts("7");
         Storage.saveString("PostsPerPage", "7");
         setLoading(false);
       });
-  });
+  }, []);
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <Text preset="header" text="Settings" />
+      <Text preset="header" style={TITLE} text="Settings" />
       {
         loading ?
           <ActivityIndicator color={color.palette.white} size="large" />
@@ -62,8 +62,10 @@ export const SettingsScreen = observer(function SettingsScreen() {
               // style={fieldStyle}
               label="Posts per Page"
               onChangeText={(val) => {
-                setTouched(true);
-                setNumPosts(Number.parseInt(val))
+                if(val !== null) {
+                  setTouched(true);
+                  setNumPosts(val)
+                }
               }}
               value={numPosts.toString()}
               keyboardType="numeric"
